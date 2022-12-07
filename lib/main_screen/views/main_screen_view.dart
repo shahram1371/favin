@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 class MainScreenView extends StatelessWidget {
   MainScreenView({super.key});
   final controller = Get.put<MainScreenController>(MainScreenController());
+  RxList<String> imagesBaskett = <String>[].obs;
+  RxList<String> placeNamesBaskett = <String>[].obs;
+  RxList<int> dollarBaskett = <int>[].obs;
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -39,21 +42,70 @@ class MainScreenView extends StatelessWidget {
   }
 
   Widget _listItem(int index) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
-      child: Column(
-        children: [
-          _photoRow(index),
-          const SizedBox(
-            height: 8,
-          ),
-          _greyCard()
-        ],
+    return InkWell(
+      onTap: (() {
+        imagesBaskett.add(controller.images[index]);
+        placeNamesBaskett.add(controller.placeNames[index]);
+        dollarBaskett.add(controller.dollar[index]);
+        controller.addToBasket(
+            imagesBaskett: imagesBaskett,
+            placeNamesBaskett: placeNamesBaskett,
+            dollarBaskett: dollarBaskett);
+        print(controller.imagesBasket.length);
+      }),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),
+        child: Column(
+          children: [
+            _photoRow(index),
+            const SizedBox(
+              height: 8,
+            ),
+            _greyCard(index)
+          ],
+        ),
       ),
     );
   }
 
-  Widget _greyCard() {}
+  Widget _greyCard(int index) {
+    return Container(
+      height: 30,
+      decoration: BoxDecoration(
+          color: const Color(0xfff3f3f3),
+          borderRadius: BorderRadius.circular(3)),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 20, left: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _items(controller.firstText[index]),
+            _items(controller.tourNumber[index]),
+            _items(controller.personNumber[index])
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _items(String text) {
+    return Row(
+      children: [
+        const CircleAvatar(
+          radius: 3,
+          backgroundColor: Color(0xff9c9c9c),
+        ),
+        const SizedBox(
+          width: 3,
+        ),
+        Text(
+          text,
+          style: const TextStyle(fontSize: 13, color: Color(0xffcacaca)),
+        )
+      ],
+    );
+  }
+
   Widget _photoRow(int index) {
     return Row(
       children: [
@@ -144,6 +196,4 @@ class MainScreenView extends StatelessWidget {
       ],
     );
   }
-
-  // Widget _greyCard() {}
 }

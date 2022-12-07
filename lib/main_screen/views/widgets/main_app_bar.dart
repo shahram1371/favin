@@ -1,4 +1,6 @@
+import 'package:favin/main_screen/controller/main_screen_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
   const MainAppBar({super.key});
@@ -11,6 +13,7 @@ class MainAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MainAppBarState extends State<MainAppBar> {
+  final controller = Get.find<MainScreenController>();
   int selectIndex = 0;
   @override
   Widget build(BuildContext context) {
@@ -182,9 +185,34 @@ class _MainAppBarState extends State<MainAppBar> {
   }
 
   Widget _iconsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Icon(Icons.menu), Icon(Icons.shopping_basket_outlined)],
-    );
+    return Obx((() => Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Icon(
+              Icons.menu,
+              size: 30,
+              color: Colors.white,
+            ),
+            Stack(children: [
+              SizedBox(
+                  height: 30,
+                  width: 40,
+                  child: Image.asset(
+                    'assets/icons/basket_icon.png',
+                    color: Colors.white,
+                    fit: BoxFit.fill,
+                  )),
+              controller.imagesBasket.isEmpty
+                  ? Container()
+                  : Positioned(
+                      top: 0,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.red,
+                        radius: 10,
+                        child: Text('${controller.imagesBasket.length}'),
+                      ))
+            ])
+          ],
+        )));
   }
 }
