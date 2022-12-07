@@ -5,9 +5,6 @@ import 'package:get/get.dart';
 class MainScreenView extends StatelessWidget {
   MainScreenView({super.key});
   final controller = Get.put<MainScreenController>(MainScreenController());
-  RxList<String> imagesBaskett = <String>[].obs;
-  RxList<String> placeNamesBaskett = <String>[].obs;
-  RxList<int> dollarBaskett = <int>[].obs;
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
@@ -44,14 +41,9 @@ class MainScreenView extends StatelessWidget {
   Widget _listItem(int index) {
     return InkWell(
       onTap: (() {
-        imagesBaskett.add(controller.images[index]);
-        placeNamesBaskett.add(controller.placeNames[index]);
-        dollarBaskett.add(controller.dollar[index]);
-        controller.addToBasket(
-            imagesBaskett: imagesBaskett,
-            placeNamesBaskett: placeNamesBaskett,
-            dollarBaskett: dollarBaskett);
-        print(controller.imagesBasket.length);
+        controller.imagesBasket.add(controller.images[index]);
+        controller.placeNamesBasket.add(controller.placeNames[index]);
+        controller.dollarBasket.add(controller.dollar[index]);
       }),
       child: Padding(
         padding: const EdgeInsets.only(right: 16, left: 16, bottom: 16),

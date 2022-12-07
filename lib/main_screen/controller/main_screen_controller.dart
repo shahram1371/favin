@@ -30,12 +30,4 @@ class MainScreenController extends GetxController {
   RxList<String> imagesBasket = <String>[].obs;
   RxList<String> placeNamesBasket = <String>[].obs;
   RxList<int> dollarBasket = <int>[].obs;
-  void addToBasket(
-      {required RxList<String> imagesBaskett,
-      required RxList<String> placeNamesBaskett,
-      required RxList<int> dollarBaskett}) {
-    imagesBasket(imagesBaskett);
-    placeNamesBasket(placeNamesBaskett);
-    dollarBasket(dollarBaskett);
-  }
 }

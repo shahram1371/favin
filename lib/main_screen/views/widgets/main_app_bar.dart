@@ -1,3 +1,4 @@
+import 'package:favin/basket_screen/views/basket_screen_page.dart';
 import 'package:favin/main_screen/controller/main_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -185,34 +186,41 @@ class _MainAppBarState extends State<MainAppBar> {
   }
 
   Widget _iconsRow() {
-    return Obx((() => Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Icon(
-              Icons.menu,
-              size: 30,
-              color: Colors.white,
-            ),
-            Stack(children: [
-              SizedBox(
-                  height: 30,
-                  width: 40,
-                  child: Image.asset(
-                    'assets/icons/basket_icon.png',
-                    color: Colors.white,
-                    fit: BoxFit.fill,
-                  )),
-              controller.imagesBasket.isEmpty
-                  ? Container()
-                  : Positioned(
-                      top: 0,
-                      child: CircleAvatar(
-                        backgroundColor: Colors.red,
-                        radius: 10,
-                        child: Text('${controller.imagesBasket.length}'),
-                      ))
-            ])
-          ],
-        )));
+    return Obx(
+      (() => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Icon(
+                Icons.menu,
+                size: 30,
+                color: Colors.white,
+              ),
+              Stack(children: [
+                GestureDetector(
+                  onTap: (() {
+                    Get.to(() => const BasketScreenPage());
+                  }),
+                  child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.asset(
+                        'assets/icons/basket_icon.png',
+                        color: Colors.white,
+                        fit: BoxFit.fill,
+                      )),
+                ),
+                controller.imagesBasket.isEmpty
+                    ? Container()
+                    : Positioned(
+                        top: 0,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.red,
+                          radius: 10,
+                          child: Text('${controller.imagesBasket.length}'),
+                        ))
+              ])
+            ],
+          )),
+    );
   }
 }
